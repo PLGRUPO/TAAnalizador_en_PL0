@@ -1,0 +1,14 @@
+<h1> Programas</h1>
+<table border="1" cellspacing="2">
+  <tr> 
+    <td> <b> Nombre</b></td>
+    <td> <b> Propietario</b></td>
+    <td> <b> Programa</b></td>
+</tr>
+   <%cs.each do|c| %>
+    <tr>
+      <td> <%= c.name %> </td>
+      <td> <%= c.user %></td>
+      <td> <%= c.source %></td>
+ <% end %>
+</tr>
