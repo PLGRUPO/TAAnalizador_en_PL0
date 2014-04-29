@@ -34,7 +34,7 @@ function treeTransform (node) {
       node.right = treeTransform(node.right);
       node = constantFolding(node);
 
-      if (node.type == '*')
+      if (node.type == '*' || node.type == '/')
         node = multOptimization(node);
       break;
     case '-':
@@ -109,7 +109,7 @@ function multOptimization (node) {
     var val = node.right.value;
     // Potencia de 2
     if (val != 0 && (val & val-1) == 0) {
-      node.type = 'SHIFTLEFT';
+      node.type = (node.type == '*')? 'SHIFTLEFT' : 'SHIFTRIGHT';
       node.right = { type: 'NUMBER', value: Math.log(val)/Math.log(2)};
     }
   }
