@@ -3,7 +3,8 @@ $(document).ready(function() {
   $('#parse').click(function() {
     try {
       var result = pl0.parse($('#input').val());
-      $('#output').html(JSON.stringify(result,undefined,2));
+      var processed = treeTransform(result);
+      $('#output').html(JSON.stringify(processed,undefined,2));
       tabTransition("#entrada", "#salida");
     }
     catch (e) {
@@ -83,9 +84,4 @@ function saveTextAsFile (val,name) {
   }
   else
     alert("Es necesario introducir un contenido en el textarea y lanzar el parser antes de descargar!!");
-}
-
-function test_main(value){ 
-  var result = pl0.parse(value);
-  return JSON.stringify(result,undefined,2).replace(/\n/g,"");
 }
