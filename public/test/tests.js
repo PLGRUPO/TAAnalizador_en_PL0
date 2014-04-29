@@ -141,4 +141,12 @@ suite ('Comprobaciones de las modificaciones/optimizaciones en el árbol generad
     assert.equal(result.content.right.right.value, 4);
   });
 
+  test('Optimización de divisiones por potencias de 2', function () {
+    var result = pl0.parse('var a; a = a / 32.');
+    result = treeTransform(result);
+
+    assert.equal(result.content.right.type, 'SHIFTRIGHT');
+    assert.equal(result.content.right.right.value, 5);
+  });
+
 });
