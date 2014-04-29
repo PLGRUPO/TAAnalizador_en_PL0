@@ -1,6 +1,6 @@
 var assert = chai.assert;
 
-suite('PL/0 Analyzer using Jison', function() {
+suite('Comprobaciones del parser', function () {
 
   test('Asociaciatividad de la resta', function () {
     var result = pl0.parse('var a; a=3-2-1.');
@@ -48,7 +48,25 @@ suite('PL/0 Analyzer using Jison', function() {
     assert.equal(result.procs[0].content.arguments[2].content.type, '*');
   });
 
-  test('Tabla de símbolos', function() {
+  test('Errores en la entrada', function () {
+    assert.throw(function() {
+      pl0.parse('var a, b; while (3 < 1) do if (a > b) then a=2-(2.'); // Falta el ')'
+    });
+
+    assert.throw(function() {
+      pl0.parse('var i, c; for (i = 0; i < 10; i++) do c +=i.'); // Esto no es PL/0...
+    });
+
+    assert.throw(function() {
+      pl0.parse('var a, b, c, d; begin a = b; b = c; c = d; d =; end.'); // Falta la asignación
+    });
+  });
+
+});
+
+suite ('Comprobaciones de análisis de ámbito/semántico', function () {
+
+  test('Tabla de símbolos', function () {
     var result = pl0.parse('const a = 10; var b; procedure c; call c; b = a+7.');
     assert.deepEqual(result.sym_table, {
       a: {
@@ -68,7 +86,7 @@ suite('PL/0 Analyzer using Jison', function() {
     });
   });
 
-  test('Atributo declared_in asociado a la declaración más cercana', function() {
+  test('Atributo declared_in asociado a la declaración más cercana', function () {
     var result = pl0.parse('var a; procedure b(a); call b(a-1); a = a+7.');
     assert.equal(result.sym_table.a.declared_in, 'global');
     assert.equal(result.procs[0].sym_table.a.declared_in, 'b');
@@ -92,18 +110,35 @@ suite('PL/0 Analyzer using Jison', function() {
     });
   });
 
-  test('Errores en la entrada', function() {
-    assert.throw(function() {
-      pl0.parse('var a, b; while (3 < 1) do if (a > b) then a=2-(2.'); // Falta el ')'
-    });
+});
 
-    assert.throw(function() {
-      pl0.parse('var i, c; for (i = 0; i < 10; i++) do c +=i.'); // Esto no es PL/0...
-    });
+suite ('Comprobaciones de las modificaciones/optimizaciones en el árbol generado', function () {
 
-    assert.throw(function() {
-      pl0.parse('var a, b, c, d; begin a = b; b = c; c = d; d =; end.'); // Falta la asignación
-    });
+  test('Plegado de constantes simple', function () {
+    var result = pl0.parse('var a; a = 3-4+5.');
+    result = treeTransform(result);
+
+    assert.equal(result.content.right.type, 'NUMBER');
+    assert.equal(result.content.right.value, 4);
+  });
+
+  test('Plegado de constantes complejo', function () {
+    var result = pl0.parse('var a; while (a < 23-18/6) do a = 5-5+a.');
+    result = treeTransform(result);
+
+    assert.equal(result.content.cond.right.type, 'NUMBER');
+    assert.equal(result.content.cond.right.value, 20);
+
+    assert.equal(result.content.st.right.left.type, 'NUMBER');
+    assert.equal(result.content.st.right.left.value, 0);
+  });
+
+  test('Optimización de multiplicaciones por potencias de 2', function () {
+    var result = pl0.parse('var a; a = a * 16.');
+    result = treeTransform(result);
+
+    assert.equal(result.content.right.type, 'SHIFTLEFT');
+    assert.equal(result.content.right.right.value, 4);
   });
 
 });
