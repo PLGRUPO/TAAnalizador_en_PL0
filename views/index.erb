@@ -1,4 +1,4 @@
-<h1>Calculadora usando Jison</h1>
+<h1 style="text-align:center">Analizador de PL0 usando Jison</h1>
 
 <script type="text/javascript" src="pl0.js"></script>
 <script type="text/javascript" src="treeTransform.js"></script>
@@ -9,119 +9,152 @@ localStorage.setItem("userName", "<%= isLogin %>");
 </script>
 
 
-<div class="main-content clearfix">
-  <div class="tile-area no-padding clearfix">
-    <div class="tile-group no-margin no-padding1 clearfix" style="width: 100%;">
-    
-      <div class="tile quadro quadro-vertical ol-transparent" style="height:initial;cursor:default;">
-      
-        <div class="tab-control" data-role="tab-control">
-	  <ul class="tabs">
-	    <li class="active"><a id="tad_entrada">Entrada</a></li>
-	    <li><a id="tad_salida">Salida</a></li>
-	    <li ><a id="savebutton"><i class="icon-upload-2"></i>&nbsp;Guardar</a></li>
-	    <li><a id ="download"><span class="icon-download-2">&nbsp;Descargar</span></a></li>
-	  </ul>
-	  <br>
-        </div>
-       
-        <div id="entrada" style="padding-left:10px;padding-right:10px;">
-          <p>
-            <input type="file" id="examples"/>
-          </p>
-          <p>
-            <div style="margin-bottom:10px;">
-              <% programs.each do |p| %>
-                <div class="button">
-                  <a href="<%= p.name %>" <%=current?('/'+p.name)%>>
-                    <i class="icon-new"></i> 
-                    <%= p.name %>
-                  </a>
-                </div>
-              <% end %>
-            </div>
-            <form id="formsave" action="/save" method="post">
+
+<div style="width:90%;margin-left:auto;margin-right:auto;">
+  <div class="main-content clearfix">
+    <div class="tile-area no-padding clearfix">
+      <div class="tile-group no-margin no-padding1 clearfix" style="width: 100%;">
+
+        <div class="tile quadro quadro-vertical ol-transparent" style="height:initial;cursor:default;min-height:210px;">
+
+          <div class="tab-control" data-role="tab-control">
+            <ul class="tabs">
+              <li class="active"><a id="tad_entrada">Entrada</a></li>
+              <li><a id="tad_salida">Salida</a></li>
+              <li ><a id="savebutton"><i class="icon-upload-2"></i>&nbsp;Guardar</a></li>
+              <li><a id ="download"><span class="icon-download-2">&nbsp;Descargar</span></a></li>
+            </ul>
+            <br>
+          </div>
+
+          <div id="entrada" style="padding-left:10px;padding-right:10px;">
+            <p>
+              <input type="file" id="examples"/>
+            </p>
+            <p>
               <div style="margin-bottom:10px;">
-                <div style="float: left; color:black;"><label for="saveas">Save as</label></div>
-                <input style="margin-left:10px;" id="saveas" type="text" name="fname" title="name" pattern="^(?!test$)\w+$"/>
+                <% programs.each do |p| %>
+                  <div class="button">
+                    <a href="<%= p.name %>" <%=current?('/'+p.name)%>>
+                      <i class="icon-new"></i> 
+                      <%= p.name %>
+                    </a>
+                  </div>
+                <% end %>
               </div>
-              <textarea id="input" name="input" autofocus style="width:100%;min-height:194px;min-width:100%;max-width:100%;height:209px;font-family:monospace;font-size:80%;" wrap="off"><%= source %></textarea>
-              <br/>
-            </form>
-            <div class="input-control switch" id="parse" style="margin-left:auto;margin-right:auto;">
-              <button class="image-button bg-darkGreen fg-white image-left">
-                <i class="icon-rocket on-left bg-green"></i>
-                Parse
-              </button>
-            </div>
+              <form id="formsave" action="/save" method="post">
+                <div style="margin-bottom:10px;">
+                  <div style="float: left; color:black;"><label for="saveas">Guardar como:</label></div>
+                  <input style="margin-left:10px;" id="saveas" type="text" name="fname" title="name" pattern="^(?!test$)\w+$"/>
+                </div>
+                <textarea id="input" name="input" autofocus style="width:100%;min-height:194px;min-width:100%;max-width:100%;height:209px;font-family:monospace;font-size:80%;" wrap="off"><%= source %></textarea>
+                <br/>
+              </form>
+              <div class="input-control switch" id="parse" style="margin-left:auto;margin-right:auto;">
+                <button class="image-button bg-darkGreen fg-white image-left">
+                  <i class="icon-rocket on-left bg-green"></i>
+                  Parsear
+                </button>
+              </div>
+            </p>
+          </div>
+
+          <p>
+            <div id="flash"><%= flash[:notice] if flash[:notice]%></div>
           </p>
-        </div>
-       
-      <p>
-      <div id="flash"><%= flash[:notice] if flash[:notice]%></div>
-    </p>
 
-        <div id="salida" style="padding-left:10px;padding-right:10px;color:black;font-family:monospace;">
-          <div class="output">
-            <pre><span id="output"></span></pre>
+          <div id="salida" style="padding-left:10px;padding-right:10px;color:black;font-family:monospace;">
+            <div class="output">
+              <pre><span id="output"></span></pre>
+            </div>
           </div>
+
         </div>
 
-      </div>
-
-
-      
         <!--login panel-->
-        <div class="tile quadro quadro ">
+        <div id = "loginpanel">
 
-          <div id = "loginpanel">
-          <a style="width:250px" class="command-button danger" href="/auth/google_oauth2" title="Google" <%=current?("/auth/google_oauth2")%>>
-            <i class="icon-google-plus"></i>  Login with Google+
-            <br/><br/>
-          </a>
-          
-          <a style="width:250px" class="command-button inverse" href="/auth/github" title="Github" <%=current?("/auth/github")%>>
-	    <i class="icon-github"></i>   Login with Github
-	    <br/><br/>
-          </a>
-          
-          <a style="width:250px;color:white;" class="command-button bg-darkBlue" href="/auth/facebook" title="Facebook" <%=current?("/auth/facebook")%>>
-            <i class="icon-facebook"></i>   Login with Facebook
-            <br/><br/>
-          </a>
-          
-          <a style="width:250px;color:white;" class="command-button bg-blue" href="/auth/twitter" title="Twitter" <%=current?("/auth/twitter")%>>
-            <i class="icon-twitter"></i>   Login with Twitter
-            <br/><br/>
-          </a>
+          <div style="width:250px;height:100px;" class="tile command-button danger" <%=current?("/auth/google_oauth2")%> title="Google">
+            <a href="/auth/google_oauth2">
+              <div class="tile-content icon">
+                <span class="icon-google-plus"></span>
+              </div>
+              <div class="brand">
+                <div class="label" style="margin-top:10px;text-align:center;">Entrar usando Google+</div>
+              </div>
+            </a>
           </div>
-          <div id = "logininfo" style="display:none;">
-           <a style="width:250px;color:white;" class="command-button bg-blue" href="/users" title="Google" <%=current?("/users")%>>
-            <i class="icon-user"></i>  Ver Usuarios
-            <br/><br/>
-          </a>
-          
-          <a style="width:250px;color:white;" class="command-button bg-blue"  href="/files" title="Github" <%=current?("/files")%>>
-	    <i class="icon-files"></i>   Ver Programas 
-	    <br/><br/>
-          </a>
+
+          <div style="width:250px;height:100px;" class="tile command-button inverse" <%=current?("/auth/github")%> title="Github">
+            <a href="/auth/github">
+              <div class="tile-content icon">
+                <span class="icon-github"></span>
+              </div>
+              <div class="brand">
+                <div class="label" style="margin-top:10px;text-align:center;">Entrar usando Github</div>
+              </div>
+            </a>
           </div>
-          
-      <script>
-        var value = localStorage.getItem('userName');
-        if(!value.trim()){
-	  $("#logininfo").hide();
-	  $("#loginpanel").show();
-        }else{
-	  $("#loginpanel").hide();
-	  $("#logininfo").show();
-	  
-        }
-      </script>
+
+          <div style="width:250px;height:100px;" class="tile command-button bg-darkBlue" <%=current?("/auth/facebook")%> title="Facebook">
+            <a href="/auth/facebook">
+              <div class="tile-content icon">
+                <span class="icon-facebook"></span>
+              </div>
+              <div class="brand">
+                <div class="label" style="margin-top:10px;text-align:center;">Entrar usando Facebook</div>
+              </div>
+            </a>
+          </div>
+
+          <div style="width:250px;height:100px;color:white;" class="tile command-button bg-blue" <%=current?("/auth/twitter")%> title="Twitter">
+            <a href="/auth/twitter">
+              <div class="tile-content icon">
+                <span class="icon-twitter"></span>
+              </div>
+              <div class="brand">
+                <div class="label" style="margin-top:10px;text-align:center;">Entrar usando Twitter</div>
+              </div>
+            </a>
+          </div>
+
+        </div> <!-- /login panel -->
+
+        <div id="logininfo" >
+          <div style="width:250px;height:100px;color:white;" class="tile command-button bg-blue" <%=current?("/users")%> title="Ver usuarios">
+            <a href="/users">
+              <div class="tile-content icon">
+                <span class="icon-user"></span>
+              </div>
+              <div class="brand">
+                <div class="label" style="margin-top:10px;text-align:center;">Ver usuarios</div>
+              </div>
+            </a>
+          </div>
+
+          <div style="width:250px;height:100px;color:white;" class="tile command-button bg-blue" <%=current?("/files")%> title="Ver programas">
+            <a href="/files">
+              <div class="tile-content icon">
+                <span class="icon-files"></span>
+              </div>
+              <div class="brand">
+                <div class="label" style="margin-top:10px;text-align:center;">Ver programas</div>
+              </div>
+            </a>
+          </div>
         </div>
-   </div>   
- </div>
+
+        <script>
+          var value = localStorage.getItem('userName');
+          if (!value.trim()) {
+            $("#logininfo").hide();
+            $("#loginpanel").show();
+          } else {
+            $("#loginpanel").hide();
+            $("#logininfo").show();
+          }
+        </script>
+      </div>   
+    </div>
+  </div>
 </div>
-
-
-
