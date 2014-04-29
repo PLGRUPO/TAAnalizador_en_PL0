@@ -29,7 +29,7 @@ nav {
     background: #444444;
     color: white; }
     nav a:hover {
-      background-color: #002eb8; }
+      background: #111111; }
 
 p {
   font: 13px/1.4 Helvetica, Arial, sans-serif; }
@@ -78,8 +78,9 @@ nav a.current {
 .error {
   color: red; }
 
-.success {
-  color: #00ff33;}
-
 .centered {
   text-align: center; }
+
+.tabs li {
+  cursor: pointer;
+}
