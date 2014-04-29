@@ -85,8 +85,3 @@ function saveTextAsFile (val,name) {
   else
     alert("Es necesario introducir un contenido en el textarea y lanzar el parser antes de descargar!!");
 }
-
-function test_main(value){ 
-  var result = pl0.parse(value);
-  return JSON.stringify(result,undefined,2).replace(/\n/g,"");
-}
