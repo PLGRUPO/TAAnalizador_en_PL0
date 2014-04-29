@@ -16,13 +16,13 @@ localStorage.setItem("userName", "<%= isLogin %>");
       <div class="tile quadro quadro-vertical ol-transparent" style="height:initial;cursor:default;">
       
         <div class="tab-control" data-role="tab-control">
-	  <ul class="tabs">
-	    <li class="active"><a id="tad_entrada">Entrada</a></li>
-	    <li><a id="tad_salida">Salida</a></li>
-	    <li ><a id="savebutton"><i class="icon-upload-2"></i>&nbsp;Guardar</a></li>
-	    <li><a id ="download"><span class="icon-download-2">&nbsp;Descargar</span></a></li>
-	  </ul>
-	  <br>
+          <ul class="tabs">
+            <li class="active"><a id="tad_entrada">Entrada</a></li>
+            <li><a id="tad_salida">Salida</a></li>
+            <li ><a id="savebutton"><i class="icon-upload-2"></i>&nbsp;Guardar</a></li>
+            <li><a id ="download"><span class="icon-download-2">&nbsp;Descargar</span></a></li>
+          </ul>
+          <br>
         </div>
        
         <div id="entrada" style="padding-left:10px;padding-right:10px;">
@@ -56,10 +56,10 @@ localStorage.setItem("userName", "<%= isLogin %>");
             </div>
           </p>
         </div>
-       
-      <p>
-      <div id="flash"><%= flash[:notice] if flash[:notice]%></div>
-    </p>
+
+        <p>
+          <div id="flash"><%= flash[:notice] if flash[:notice]%></div>
+        </p>
 
         <div id="salida" style="padding-left:10px;padding-right:10px;color:black;font-family:monospace;">
           <div class="output">
@@ -71,57 +71,54 @@ localStorage.setItem("userName", "<%= isLogin %>");
 
 
       
-        <!--login panel-->
-        <div class="tile quadro quadro ">
+      <!--login panel-->
+      <div class="tile quadro">
 
-          <div id = "loginpanel">
+        <div id = "loginpanel">
           <a style="width:250px" class="command-button danger" href="/auth/google_oauth2" title="Google" <%=current?("/auth/google_oauth2")%>>
-            <i class="icon-google-plus"></i>  Login with Google+
+            <i class="icon-google-plus"></i>&nbsp;Login with Google+
             <br/><br/>
           </a>
           
           <a style="width:250px" class="command-button inverse" href="/auth/github" title="Github" <%=current?("/auth/github")%>>
-	    <i class="icon-github"></i>   Login with Github
-	    <br/><br/>
+            <i class="icon-github"></i>&nbsp;Login with Github
+            <br/><br/>
           </a>
           
           <a style="width:250px;color:white;" class="command-button bg-darkBlue" href="/auth/facebook" title="Facebook" <%=current?("/auth/facebook")%>>
-            <i class="icon-facebook"></i>   Login with Facebook
+            <i class="icon-facebook"></i>&nbsp;Login with Facebook
             <br/><br/>
           </a>
           
           <a style="width:250px;color:white;" class="command-button bg-blue" href="/auth/twitter" title="Twitter" <%=current?("/auth/twitter")%>>
-            <i class="icon-twitter"></i>   Login with Twitter
+            <i class="icon-twitter"></i>&nbsp;Login with Twitter
             <br/><br/>
           </a>
-          </div>
-          <div id = "logininfo" style="display:none;">
-           <a style="width:250px;color:white;" class="command-button bg-blue" href="/users" title="Google" <%=current?("/users")%>>
-            <i class="icon-user"></i>  Ver Usuarios
-            <br/><br/>
-          </a>
-          
-          <a style="width:250px;color:white;" class="command-button bg-blue"  href="/files" title="Github" <%=current?("/files")%>>
-	    <i class="icon-files"></i>   Ver Programas 
-	    <br/><br/>
-          </a>
-          </div>
-          
-      <script>
-        var value = localStorage.getItem('userName');
-        if(!value.trim()){
-	  $("#logininfo").hide();
-	  $("#loginpanel").show();
-        }else{
-	  $("#loginpanel").hide();
-	  $("#logininfo").show();
-	  
-        }
-      </script>
         </div>
-   </div>   
- </div>
+
+        <div id = "logininfo" style="display:none;">
+          <a style="width:250px;color:white;" class="command-button bg-blue" href="/users" title="Google" <%=current?("/users")%>>
+            <i class="icon-user"></i>&nbsp;Ver Usuarios
+            <br/><br/>
+          </a>
+        
+          <a style="width:250px;color:white;" class="command-button bg-blue"  href="/files" title="Github" <%=current?("/files")%>>
+            <i class="icon-files"></i>&nbsp;Ver Programas 
+            <br/><br/>
+          </a>
+        </div>
+
+        <script>
+          var value = localStorage.getItem('userName');
+          if (!value.trim()) {
+            $("#logininfo").hide();
+            $("#loginpanel").show();
+          } else {
+            $("#loginpanel").hide();
+            $("#logininfo").show();
+          }
+        </script>
+      </div>
+    </div>   
+  </div>
 </div>
-
-
-
