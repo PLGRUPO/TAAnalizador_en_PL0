@@ -4,7 +4,7 @@
 
 El objetivo de esta práctica es añadir soporte para análisis de ámbito y
 análisis semántico al parser creado en la última práctica
-([ver aquí](https://bitbucket.org/alu0100700459/pl0_analyzer_jison)) utilizando
+([ver aquí](https://github.com/PLGRUPO/TAAnalizador_en_PL0)) utilizando
 Jison.
 
 La implementación se realiza en forma de aplicación web donde se pueden
@@ -48,7 +48,7 @@ Y para las pruebas:
 ## Despliegue
 
 El despliegue de esta aplicación web se encuentra en
-[Heroku](http://peaceful-headland-8284.herokuapp.com/).
+[Heroku](http://frozen-shore-6357.herokuapp.com/).
 
 ## Tests
 
