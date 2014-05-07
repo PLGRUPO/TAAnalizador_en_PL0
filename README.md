@@ -2,10 +2,11 @@
 
 ## Descripción
 
-El objetivo de esta práctica es añadir soporte para análisis de ámbito y
-análisis semántico al parser creado en la última práctica
-([ver aquí](https://github.com/PLGRUPO/TAAnalizador_en_PL0)) utilizando
-Jison.
+El objetivo de esta práctica es añadir transformaciones al AST del parser
+creado en la última práctica ([ver aquí](https://github.com/PLGRUPO/AnalisisAmbitoJison))
+para que realice el plegado de las constantes (sustituir expresiones formadas
+solamente con números por su resultado) y la optimización de las multiplicaciones
+y divisiones por números que son potencias de 2.
 
 La implementación se realiza en forma de aplicación web donde se pueden
 cargar o escribir ficheros escritos en [PL/0](https://en.wikipedia.org/wiki/PL/0)
