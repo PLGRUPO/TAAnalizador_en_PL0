@@ -43,7 +43,7 @@ Las tecnologías utilizadas en esta aplicación son las siguientes:
 
 Y para las pruebas:
 
-  - [Mocha](http://visionmedia.github.io/mocha/)
+  - [Mocha](http://mochajs.org/)
   - [Chai](http://chaijs.com/)
 
 ## Despliegue
